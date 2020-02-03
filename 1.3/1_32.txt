@@ -1,0 +1,37 @@
+#lang sicp
+
+(define (identity x) x)
+
+(define (accumulate-iter combiner null-value term a next b)
+  (define (iter a result)
+    (if (>= a b)
+        result
+        (iter (next a) (combiner (term a) result))))
+  (iter a b))
+
+(define (accumulate-recur combiner null-value term a next b)
+  (if (> a b)
+      null-value
+      (combiner (term a) (accumulate-recur combiner null-value term (next a) next b))))
+
+(define (product term a next b accumulator)
+  (accumulator * 1 term a next b))
+
+(define (sum a b accumulator)
+  (accumulator + 0 identity a inc b))
+
+(define (factorial n accumulator)
+  (product identity 1 inc n accumulator))
+
+(factorial 3 accumulate-recur)
+(factorial 3 accumulate-iter)
+(factorial 6 accumulate-recur)
+(factorial 6 accumulate-iter)
+
+(sum 3 5 accumulate-recur)
+(sum 3 5 accumulate-iter)
+(sum -1 3 accumulate-recur)
+(sum -1 3 accumulate-iter)
+(sum 10 13 accumulate-recur)
+(sum 10 13 accumulate-iter)
+

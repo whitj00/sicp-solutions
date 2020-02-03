@@ -1,0 +1,23 @@
+#lang sicp
+
+(define (cube x) (* x x x))
+(define (sum term a next b)
+  (if (> a b)
+      0
+      (+ (term a)
+         (sum term (next a) next b))))
+
+(define (integral f a b n)
+  (define h (/ (- b a) n))
+  (define (kth-y k)
+    (*
+     (f (+ a (* k h)))
+     (cond ((or (= k 0) (= k n)) 1)
+           ((even? k) 4)
+           (else 2))))
+  (* (/ h 3) (sum kth-y 0 inc n)))
+
+(integral cube 0 1 100) ;; 14803/60000
+(integral cube 0 1 1000) ;; 1498003/6000000
+(integral cube 0 1 10000) ;; 149980003/600000000
+(integral cube 0 1 100000) ;; 14999800003/60000000000
