@@ -1,0 +1,18 @@
+#lang sicp
+
+(define (f n)
+  (if (< n 3)
+      n
+      (+ (f (- n 1)) (* 2 (f (- n 2))) (* 3 (f (- n 3))))))
+
+(define (f2 n)
+  (f2-iter n 3 2 1 0))
+
+(define (f2-iter n counter a b c)
+  (if (> counter n)
+       a
+       (f2-iter n (inc counter) (+ a (* 2 b) (* 3 c)) a b)))
+
+(define (test-f x)
+  (= (f x) (f2 x)))
+

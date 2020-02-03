@@ -1,0 +1,9 @@
+#lang sicp
+
+;; a = row (starting at 1)
+;; b = column (starting at 1)
+(define (pascal a b)
+  (cond ((and (= a 1) (= b 1) 1))
+        ((> b a) 0)
+        ((< b 1) 0)
+        (else (+ (pascal (dec a) (dec b)) (pascal (dec a) b)))))
